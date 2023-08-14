@@ -11,12 +11,13 @@ import org.mongo.Entity.BillingZone;
 import java.util.List;
 
 @Path("/billingZones")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class BillingZoneResource {
 
     @GET
     @Operation(summary = "Get a list of zones")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+
     public List<BillingZone> getBills() {
         return BillingZone.listAll();
     }
