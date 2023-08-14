@@ -1,8 +1,11 @@
 package org.mongo.Entity;
 
+
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import org.bson.codecs.pojo.annotations.BsonProperty;
+
+import java.util.Date;
 
 @MongoEntity(collection = "billing_zones_by_distance")
 public class BillingZone extends PanacheMongoEntity {
@@ -10,17 +13,26 @@ public class BillingZone extends PanacheMongoEntity {
 
     @BsonProperty("name")
     public String name;
+    @BsonProperty("zone_type")
+    public String zoneType;
+    @BsonProperty("min_distance")
+    public double minDistance;
+    @BsonProperty("max_distance")
+    public double maxDistance;
+    @BsonProperty("updated_at")
+    public Date updatedAt;
+    @BsonProperty("created_at")
+    public Date createdAt;
 
-    @BsonProperty("from_distance")
-    public double fromDistance;
 
-    @BsonProperty("to_distance")
-    public double toDistance;
 
-    public BillingZone(String name, double fromDistance, double toDistance) {
+    public BillingZone(String name, String zoneType, double minDistance, double maxDistance, Date updatedAt, Date createdAt) {
         this.name = name;
-        this.fromDistance = fromDistance;
-        this.toDistance = toDistance;
+        this.zoneType = zoneType;
+        this.minDistance = minDistance;
+        this.maxDistance = maxDistance;
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
     }
 
     public BillingZone() {
@@ -34,19 +46,43 @@ public class BillingZone extends PanacheMongoEntity {
         this.name = name;
     }
 
-    public double getFromDistance() {
-        return fromDistance;
+    public String getZoneType() {
+        return zoneType;
     }
 
-    public void setFromDistance(double fromDistance) {
-        this.fromDistance = fromDistance;
+    public void setZoneType(String zoneType) {
+        this.zoneType = zoneType;
     }
 
-    public double getToDistance() {
-        return toDistance;
+    public double getMinDistance() {
+        return minDistance;
     }
 
-    public void setToDistance(double toDistance) {
-        this.toDistance = toDistance;
+    public void setMinDistance(double minDistance) {
+        this.minDistance = minDistance;
+    }
+
+    public double getMaxDistance() {
+        return maxDistance;
+    }
+
+    public void setMaxDistance(double maxDistance) {
+        this.maxDistance = maxDistance;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }
