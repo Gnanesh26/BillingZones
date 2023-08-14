@@ -7,4 +7,5 @@ import org.mongo.Entity.BillingZone;
 @ApplicationScoped
 public class BillingZoneRepository implements PanacheMongoRepository<BillingZone> {
 
+
 }
