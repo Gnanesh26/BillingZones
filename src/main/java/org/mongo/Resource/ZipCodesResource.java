@@ -9,7 +9,6 @@ import jakarta.ws.rs.core.Response;
 import org.mongo.Entity.ZipCodes;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Path("/zip-codes")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -48,28 +47,28 @@ public class ZipCodesResource {
 //}
 
 
-
     @POST
     public Response createZipCodes(ZipCodes zipCodes) {
-        List<Integer> zipCodesToCompare = new ArrayList<>();
-        Set<Integer> uniqueFirstThreeDigits = new HashSet<>();
+        Set<Integer> zipCodesToCompare = new LinkedHashSet<>();
+        Set<Integer> uniqueFirstThreeDigits = new LinkedHashSet<>();
 
         for (String zipCode : zipCodes.getZipCodes()) {
             int firstThreeDigits = Integer.parseInt(zipCode.substring(0, 3)) * 100;
 
-            if (uniqueFirstThreeDigits.contains(firstThreeDigits)) {
+            if (!uniqueFirstThreeDigits.add(firstThreeDigits)) {
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity("Duplicate zip-code !! Check again")
                         .build();
             }
 
-            uniqueFirstThreeDigits.add(firstThreeDigits);
-
             for (int j = 0; j <= 100; j++) {
-                int fullZipCode = firstThreeDigits + j;
-                zipCodesToCompare.add(fullZipCode);
+                int arrayOfZipCodes = firstThreeDigits + j;
+                zipCodesToCompare.add(arrayOfZipCodes);
             }
         }
+
+        // Convert the set to a list for storage
+        List<Integer> zipCodesList = new ArrayList<>(zipCodesToCompare);
 
         ZipCodes codes = new ZipCodes(
                 zipCodes.getName(),
@@ -78,7 +77,7 @@ public class ZipCodesResource {
                 zipCodes.getZipCodes(),
                 new Date(),
                 new Date(),
-                zipCodesToCompare);
+                zipCodesList);
 
         codes.persist();
 
