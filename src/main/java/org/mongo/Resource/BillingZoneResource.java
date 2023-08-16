@@ -63,39 +63,39 @@ public class BillingZoneResource {
                 .build();
     }
 
-
-
-
-
-
-
-    @DELETE
-    @Path("/{zoneId}")
-    public Response deleteBillingZone(@PathParam("zoneId") String zoneId) {
-        // Convert the zoneId to ObjectId
-        ObjectId objectId;
-        try {
-            objectId = new ObjectId(zoneId);
-        } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Invalid zone ID format.")
-                    .build();
-        }
-
-        // Retrieve the billing zone with the provided zoneId
-        BillingZone zoneToDelete = BillingZone.findById(objectId);
-
-        if (zoneToDelete == null) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Zone with the specified ID not found.")
-                    .build();
-        }
-
-        // Delete the zone from the repository
-        zoneToDelete.delete();
-
-        return Response.status(Response.Status.OK)
-                .entity("Zone configuration deleted successfully.")
-                .build();
-    }
 }
+
+
+
+
+
+//    @DELETE
+//    @Path("/{zoneId}")
+//    public Response deleteBillingZone(@PathParam("zoneId") String zoneId) {
+//        // Convert the zoneId to ObjectId
+//        ObjectId objectId;
+//        try {
+//            objectId = new ObjectId(zoneId);
+//        } catch (IllegalArgumentException e) {
+//            return Response.status(Response.Status.BAD_REQUEST)
+//                    .entity("Invalid zone ID format.")
+//                    .build();
+//        }
+//
+//        // Retrieve the billing zone with the provided zoneId
+//        BillingZone zoneToDelete = BillingZone.findById(objectId);
+//
+//        if (zoneToDelete == null) {
+//            return Response.status(Response.Status.NOT_FOUND)
+//                    .entity("Zone with the specified ID not found.")
+//                    .build();
+//        }
+//
+//        // Delete the zone from the repository
+//        zoneToDelete.delete();
+//
+//        return Response.status(Response.Status.OK)
+//                .entity("Zone configuration deleted successfully.")
+//                .build();
+//    }
+//}
