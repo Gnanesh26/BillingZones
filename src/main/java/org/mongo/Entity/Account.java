@@ -3,7 +3,6 @@ package org.mongo.Entity;
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 
-import java.security.SecureRandom;
 
 @MongoEntity(collection = "accounts")
 public class Account extends PanacheMongoEntity {
