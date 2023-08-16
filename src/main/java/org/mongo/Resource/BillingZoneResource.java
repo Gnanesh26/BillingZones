@@ -28,74 +28,77 @@ public class BillingZoneResource {
         return BillingZone.listAll();
     }
 
+        @POST
+        public Response createBillingZone(BillingZone newBillingZone) {
+            double minDistanceDeferrable = 0.01;
 
-    @POST
-    public Response createBillingZone(BillingZone newBillingZone) {
-        // Defining the maximum allowable difference in minimum distance
-        double minDistanceDeferrable = 0.01;
-        // Retrieve existing billing zones with the same name
-        List<BillingZone> existingZones = BillingZone.list("name", newBillingZone.getName());
+            // Find existing zones with the same name and order by maxDistance descending
+            List<BillingZone> existingZones = BillingZone.list("name", newBillingZone.getName());
 
-        if (!existingZones.isEmpty()) {
-            // Get the maxDistance of the existing zone with the highest maxDistance
-            double highestMaxDistance = existingZones.get(0).getMaxDistance();
+            if (!existingZones.isEmpty()) {
+                // Sort the existing zones by maxDistance in descending order
+                existingZones.sort(Comparator.comparingDouble(BillingZone::getMaxDistance).reversed());
 
-            // Calculate the required minDistance
-            double requiredMinDistance = highestMaxDistance + minDistanceDeferrable;
+                // Calculate the required minimum distance based on the previous max distance
+                double previousMaxDistance = existingZones.get(0).getMaxDistance();
+                double requiredMinDistance = previousMaxDistance + minDistanceDeferrable;
 
-            // Check if the newBillingZone's minDistance is different from the required value
-            if (newBillingZone.getMinDistance() != requiredMinDistance) {
-                // Return a BAD_REQUEST response with an error message
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity("Invalid distance range. Min distance should be previous max distance + 0.01")
-                        .build();
+                if (Math.abs(newBillingZone.getMinDistance() - requiredMinDistance) <= 0.0001) {
+                    // Update timestamps and persist the newBillingZone
+                    newBillingZone.setUpdatedAt(new Date());
+                    newBillingZone.setCreatedAt(new Date());
+
+                    billingZoneRepository.persist(newBillingZone);
+                    // Return a success response with the newly created billing zone
+                    return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
+                } else {
+                    // Return a bad request response if the minimum distance requirement is not met
+                    return Response.status(Response.Status.BAD_REQUEST)
+                            .entity("Invalid distance range for the same name. Min distance must be exactly previous max distance + 0.01")
+                            .build();
+                }
+            } else {
+                // If no existing zones with the same name, update timestamps and persist the newBillingZone
+                newBillingZone.setUpdatedAt(new Date());
+                newBillingZone.setCreatedAt(new Date());
+
+                billingZoneRepository.persist(newBillingZone);
+
+                // Return a success response with the newly created billing zone
+                return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
             }
         }
 
-        // Setting timestamps and persisting the new billing zone
-        newBillingZone.setUpdatedAt(new Date());
-        newBillingZone.setCreatedAt(new Date());
-        billingZoneRepository.persist(newBillingZone);
 
-        // Returning a CREATED response with the new billing zone entity
-        return Response.status(Response.Status.CREATED)
-                .entity(newBillingZone)
+
+
+    @DELETE
+    @Path("/{zoneId}")
+    public Response deleteBillingZone(@PathParam("zoneId") String zoneId) {
+        // Convert the zoneId to ObjectId
+        ObjectId objectId;
+        try {
+            objectId = new ObjectId(zoneId);
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Invalid zone ID format.")
+                    .build();
+        }
+
+        // Retrieve the billing zone with the provided zoneId
+        BillingZone zoneToDelete = BillingZone.findById(objectId);
+
+        if (zoneToDelete == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Zone with the specified ID not found.")
+                    .build();
+        }
+
+        // Delete the zone from the repository
+        zoneToDelete.delete();
+
+        return Response.status(Response.Status.OK)
+                .entity("Zone configuration deleted successfully.")
                 .build();
     }
-
 }
-
-
-
-
-
-//    @DELETE
-//    @Path("/{zoneId}")
-//    public Response deleteBillingZone(@PathParam("zoneId") String zoneId) {
-//        // Convert the zoneId to ObjectId
-//        ObjectId objectId;
-//        try {
-//            objectId = new ObjectId(zoneId);
-//        } catch (IllegalArgumentException e) {
-//            return Response.status(Response.Status.BAD_REQUEST)
-//                    .entity("Invalid zone ID format.")
-//                    .build();
-//        }
-//
-//        // Retrieve the billing zone with the provided zoneId
-//        BillingZone zoneToDelete = BillingZone.findById(objectId);
-//
-//        if (zoneToDelete == null) {
-//            return Response.status(Response.Status.NOT_FOUND)
-//                    .entity("Zone with the specified ID not found.")
-//                    .build();
-//        }
-//
-//        // Delete the zone from the repository
-//        zoneToDelete.delete();
-//
-//        return Response.status(Response.Status.OK)
-//                .entity("Zone configuration deleted successfully.")
-//                .build();
-//    }
-//}
