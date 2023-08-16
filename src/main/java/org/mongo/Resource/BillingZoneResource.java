@@ -42,7 +42,7 @@ public class BillingZoneResource {
                 // Calculate the required minimum distance based on the previous max distance
                 double previousMaxDistance = existingZones.get(0).getMaxDistance();
                 double requiredMinDistance = previousMaxDistance + minDistanceDeferrable;
-
+                // absolute value
                 if (Math.abs(newBillingZone.getMinDistance() - requiredMinDistance) <= 0.0001) {
                     // Update timestamps and persist the newBillingZone
                     newBillingZone.setUpdatedAt(new Date());
@@ -54,17 +54,15 @@ public class BillingZoneResource {
                 } else {
                     // Return a bad request response if the minimum distance requirement is not met
                     return Response.status(Response.Status.BAD_REQUEST)
-                            .entity("Invalid distance range for the same name. Min distance must be exactly previous max distance + 0.01")
+                            .entity("Invalid!!!. Min distance must be exactly previous maxDistance + 0.01 only")
                             .build();
                 }
             } else {
-                // If no existing zones with the same name, update timestamps and persist the newBillingZone
                 newBillingZone.setUpdatedAt(new Date());
                 newBillingZone.setCreatedAt(new Date());
 
                 billingZoneRepository.persist(newBillingZone);
 
-                // Return a success response with the newly created billing zone
                 return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
             }
         }
