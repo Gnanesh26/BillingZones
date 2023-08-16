@@ -52,7 +52,6 @@ public class BillingZoneResource {
                     // Return a success response with the newly created billing zone
                     return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
                 } else {
-                    // Return a bad request response if the minimum distance requirement is not met
                     return Response.status(Response.Status.BAD_REQUEST)
                             .entity("Invalid!!!. Min distance must be exactly previous maxDistance + 0.01 only")
                             .build();
@@ -73,7 +72,6 @@ public class BillingZoneResource {
     @DELETE
     @Path("/{zoneId}")
     public Response deleteBillingZone(@PathParam("zoneId") String zoneId) {
-        // Convert the zoneId to ObjectId
         ObjectId objectId;
         try {
             objectId = new ObjectId(zoneId);
@@ -83,7 +81,6 @@ public class BillingZoneResource {
                     .build();
         }
 
-        // Retrieve the billing zone with the provided zoneId
         BillingZone zoneToDelete = BillingZone.findById(objectId);
 
         if (zoneToDelete == null) {
@@ -91,8 +88,6 @@ public class BillingZoneResource {
                     .entity("Zone with the specified ID not found.")
                     .build();
         }
-
-        // Delete the zone from the repository
         zoneToDelete.delete();
 
         return Response.status(Response.Status.OK)
