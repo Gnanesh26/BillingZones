@@ -24,15 +24,17 @@ public class BillingZone extends PanacheMongoEntity {
     @BsonProperty("created_at")
     public Date createdAt;
 
+    @BsonProperty("account_id")
+    public String accountId;
 
-
-    public BillingZone(String name, String zoneType, double minDistance, double maxDistance, Date updatedAt, Date createdAt) {
+    public BillingZone(String name, String zoneType, double minDistance, double maxDistance, Date updatedAt, Date createdAt, String accountId) {
         this.name = name;
         this.zoneType = zoneType;
         this.minDistance = minDistance;
         this.maxDistance = maxDistance;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
+        this.accountId = accountId;
     }
 
     public BillingZone() {
@@ -84,5 +86,13 @@ public class BillingZone extends PanacheMongoEntity {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 }
