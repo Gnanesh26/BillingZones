@@ -30,45 +30,47 @@ public class BillingZoneResource {
     }
 
     //
-
-    @POST
-    public Response createBillingZone(BillingZone newBillingZone) {
-        double minDistanceDeferrable = 0.01;
-
-        List<BillingZone> existingZones = BillingZone.list("name", newBillingZone.getName());
-
-        if (!existingZones.isEmpty()) {
-            // Sort the existing zones by maxDistance in ascending order
-            existingZones.sort(Comparator.comparingDouble(BillingZone::getMaxDistance));
-
-            double previousMaxDistance = existingZones.get(existingZones.size() - 1).getMaxDistance();
-            double requiredMinDistance = previousMaxDistance + minDistanceDeferrable;
-
-            double inputMinDistance = newBillingZone.getMinDistance();
-
-            if (Math.abs(inputMinDistance - requiredMinDistance) <= 0.0001) {
-                newBillingZone.setMinDistance(requiredMinDistance); // Set the calculated minDistance
-
-                newBillingZone.setUpdatedAt(new Date());
-                newBillingZone.setCreatedAt(new Date());
-
-                billingZoneRepository.persist(newBillingZone);
-                return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
-            } else {
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity("Invalid!!! Min distance must be exactly previous maxDistance + 0.01 only")
-                        .build();
-            }
-        } else {
-            // Allow the first zone to start from any value
-            newBillingZone.setUpdatedAt(new Date());
-            newBillingZone.setCreatedAt(new Date());
-
-            billingZoneRepository.persist(newBillingZone);
-            return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
-        }
-    }
-}
+//
+//    @POST
+//    public Response createBillingZone(BillingZone newBillingZone) {
+//        double minDistanceDeferrable = 0.01;
+//        double tolerance = 0.0001;
+//
+//        List<BillingZone> existingZones = BillingZone.list("name", newBillingZone.getName());
+//
+//        // Sort the existing zones by maxDistance in ascending order
+//        existingZones.sort(Comparator.comparingDouble(BillingZone::getMaxDistance));
+//
+//        if (!existingZones.isEmpty()) {
+//            double previousMaxDistance = existingZones.get(existingZones.size() - 1).getMaxDistance();
+//            double requiredMinDistance = previousMaxDistance + minDistanceDeferrable;
+//
+//            double inputMinDistance = newBillingZone.getMinDistance();
+//
+//            if (Math.abs(inputMinDistance - requiredMinDistance) <= tolerance) {
+//                newBillingZone.setMinDistance(requiredMinDistance);
+//                updateAndPersistBillingZone(newBillingZone);
+//                return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
+//            } else {
+//                return Response.status(Response.Status.BAD_REQUEST)
+//                        .entity("Invalid!!! Min distance must be approximately previous maxDistance + 0.01 only")
+//                        .build();
+//            }
+//        } else {
+//            if (existingZones.isEmpty()) {
+//                newBillingZone.setUpdatedAt(new Date());
+//                newBillingZone.setCreatedAt(new Date());
+//            }
+//
+//            updateAndPersistBillingZone(newBillingZone);
+//            return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
+//        }
+//    }
+//
+//    private void updateAndPersistBillingZone(BillingZone billingZone) {
+//        billingZoneRepository.persist(billingZone);
+//    }
+//}
 //
 //
 //
@@ -99,3 +101,45 @@ public class BillingZoneResource {
 //                .build();
 //    }
 //}
+
+
+    @POST
+    public Response createBillingZone(BillingZone newBillingZone) {
+        double minDistanceDeferrable = 0.01;
+
+        if (newBillingZone.getMaxDistance() > newBillingZone.getMinDistance()) {
+            List<BillingZone> existingZones = BillingZone.list("name", newBillingZone.getName());
+
+            if (!existingZones.isEmpty()) {
+                existingZones.sort(Comparator.comparingDouble(BillingZone::getMaxDistance));
+
+                double previousMaxDistance = existingZones.get(existingZones.size() - 1).getMaxDistance();
+                double requiredMinDistance = previousMaxDistance + minDistanceDeferrable;
+
+                if (Math.abs(newBillingZone.getMinDistance() - requiredMinDistance) <= 0.0001) {
+                    newBillingZone.setMinDistance(requiredMinDistance);
+
+                    newBillingZone.setUpdatedAt(new Date());
+                    newBillingZone.setCreatedAt(new Date());
+
+                    billingZoneRepository.persist(newBillingZone);
+                    return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
+                } else {
+                    return Response.status(Response.Status.BAD_REQUEST)
+                            .entity("Invalid!!! Min distance must be exactly previous maxDistance + 0.01 only")
+                            .build();
+                }
+            } else {
+                newBillingZone.setUpdatedAt(new Date());
+                newBillingZone.setCreatedAt(new Date());
+
+                billingZoneRepository.persist(newBillingZone);
+                return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
+            }
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Invalid!!! Max distance must be greater than min distance")
+                    .build();
+        }
+    }
+}
