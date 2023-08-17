@@ -57,15 +57,17 @@ public class ZipCodesResource {
 
             if (!uniqueFirstThreeDigits.add(firstThreeDigits)) {
                 return Response.status(Response.Status.BAD_REQUEST)
-                        .entity("Duplicate zip-code !! Check again")
+                        .entity("Same zip-code !! Check again")
                         .build();
             }
+
 
             for (int j = 0; j <= 100; j++) {
                 int arrayOfZipCodes = firstThreeDigits + j;
                 zipCodesToCompare.add(arrayOfZipCodes);
             }
         }
+
 
         // Convert the set to a list for storage
         List<Integer> zipCodesList = new ArrayList<>(zipCodesToCompare);
