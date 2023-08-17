@@ -30,6 +30,7 @@ public class BillingZoneResource {
     }
 
     //
+
     @POST
     public Response createBillingZone(BillingZone newBillingZone) {
         double minDistanceDeferrable = 0.01;
@@ -43,7 +44,11 @@ public class BillingZoneResource {
             double previousMaxDistance = existingZones.get(existingZones.size() - 1).getMaxDistance();
             double requiredMinDistance = previousMaxDistance + minDistanceDeferrable;
 
-            if (Math.abs(newBillingZone.getMinDistance() - requiredMinDistance) <= 0.0001) {
+            double inputMinDistance = newBillingZone.getMinDistance();
+
+            if (Math.abs(inputMinDistance - requiredMinDistance) <= 0.0001) {
+                newBillingZone.setMinDistance(requiredMinDistance); // Set the calculated minDistance
+
                 newBillingZone.setUpdatedAt(new Date());
                 newBillingZone.setCreatedAt(new Date());
 

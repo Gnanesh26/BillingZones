@@ -4,6 +4,7 @@ package org.mongo.Entity;
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.types.ObjectId;
 
 import java.util.Date;
 
@@ -25,9 +26,9 @@ public class BillingZone extends PanacheMongoEntity {
     public Date createdAt;
 
     @BsonProperty("account_id")
-    public String accountId;
+    public ObjectId accountId;
 
-    public BillingZone(String name, String zoneType, double minDistance, double maxDistance, Date updatedAt, Date createdAt, String accountId) {
+    public BillingZone(String name, String zoneType, double minDistance, double maxDistance, Date updatedAt, Date createdAt, ObjectId accountId) {
         this.name = name;
         this.zoneType = zoneType;
         this.minDistance = minDistance;
@@ -88,11 +89,11 @@ public class BillingZone extends PanacheMongoEntity {
         this.createdAt = createdAt;
     }
 
-    public String getAccountId() {
+    public ObjectId getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(String accountId) {
+    public void setAccountId(ObjectId accountId) {
         this.accountId = accountId;
     }
 }
