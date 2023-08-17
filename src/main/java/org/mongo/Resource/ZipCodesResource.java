@@ -1,9 +1,6 @@
 package org.mongo.Resource;
 
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.mongo.Entity.ZipCodes;
@@ -15,8 +12,6 @@ import java.util.*;
 @Produces(MediaType.APPLICATION_JSON)
 public class ZipCodesResource {
 
-
-//
 //    @POST
 //    public ZipCodes createZipCodes(ZipCodes zipCodes) {
 //
@@ -46,7 +41,6 @@ public class ZipCodesResource {
 //    }
 //}
 
-
     @POST
     public Response createZipCodes(ZipCodes zipCodes) {
         Set<Integer> zipCodesToCompare = new LinkedHashSet<>();
@@ -60,15 +54,11 @@ public class ZipCodesResource {
                         .entity("Same zip-code !! Check again")
                         .build();
             }
-
-
             for (int j = 0; j <= 100; j++) {
                 int arrayOfZipCodes = firstThreeDigits + j;
                 zipCodesToCompare.add(arrayOfZipCodes);
             }
         }
-
-
         // Convert the set to a list for storage
         List<Integer> zipCodesList = new ArrayList<>(zipCodesToCompare);
 
