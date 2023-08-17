@@ -34,10 +34,14 @@ public class BillingZoneResource {
                     .build();
         }
 
-        ObjectId accountId;
+        ObjectId accountId = null;
         try {
             accountId = new ObjectId(String.valueOf(newBillingZone.getAccountId()));
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException ignored) {
+            // Ignore the exception, accountId will remain null
+        }
+
+        if (accountId == null) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Invalid!!! Invalid format for Account ID.")
                     .build();
@@ -75,6 +79,16 @@ public class BillingZoneResource {
         if (newBillingZone.getMaxDistance() <= newBillingZone.getMinDistance()) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Invalid!!! Max distance must be greater than min distance")
+                    .build();
+        }
+
+        // Check if the name is already used for the same accountId
+        boolean nameExists = existingZones.stream()
+                .anyMatch(zone -> zone.getName().equals(newBillingZone.getName()));
+
+        if (nameExists) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Invalid!!! Name must be unique for the same Account ID.")
                     .build();
         }
 
