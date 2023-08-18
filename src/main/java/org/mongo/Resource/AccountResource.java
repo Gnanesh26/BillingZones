@@ -15,7 +15,7 @@ public class AccountResource {
     @POST
     public Response createAccount(Account account) {
         account.persist();
-        return Response.status(Response.Status.CREATED).entity(account).build();
+        return Response.status(Response.Status.OK).entity("Account added successfully.").build();
     }
 
 }
