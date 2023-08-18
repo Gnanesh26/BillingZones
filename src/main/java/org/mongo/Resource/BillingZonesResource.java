@@ -60,15 +60,15 @@ public class BillingZonesResource {
         List<BillingZones> existingZones = BillingZones.list("accountId", accountId);
 //
         double previousMaxDistance = 0.0;
-        boolean isFirstEntry = true;
+        boolean isFirst = true;
 
         if (!existingZones.isEmpty()) {
             existingZones.sort(Comparator.comparingDouble(BillingZones::getMaxDistance));
             previousMaxDistance = existingZones.get(existingZones.size() - 1).getMaxDistance();
-            isFirstEntry = false;
+            isFirst = false;
         }
 
-        if (!isFirstEntry) {
+        if (!isFirst) {
             double requiredMinDistance = previousMaxDistance + minDistanceDeferrable;
             if (Math.abs(newBillingZone.getMinDistance() - requiredMinDistance) > 0.01) {
                 return Response.status(Response.Status.BAD_REQUEST)
