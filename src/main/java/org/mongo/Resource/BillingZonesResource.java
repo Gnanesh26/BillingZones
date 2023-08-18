@@ -80,14 +80,14 @@ public class BillingZonesResource {
         }
 
 //        // Check if the name is already used for the same accountId
-//        boolean nameExists = existingZones.stream()
-//                .anyMatch(zone -> zone.getName().equals(newBillingZone.getName()));
-//
-//        if (nameExists) {
-//            return Response.status(Response.Status.BAD_REQUEST)
-//                    .entity("Invalid!!! Name must be unique for the same Account ID.")
-//                    .build();
-//        }
+        boolean nameExists = existingZones.stream()
+                .anyMatch(zone -> zone.getName().equals(newBillingZone.getName()));
+
+        if (nameExists) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Invalid!!! Name must be unique for the same Account ID.")
+                    .build();
+        }
 
         newBillingZone.setUpdatedAt(new Date());
         newBillingZone.setCreatedAt(new Date());
