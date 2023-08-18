@@ -3,6 +3,7 @@ package org.mongo.Entity;
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.types.ObjectId;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,8 @@ public class ZipCodes extends PanacheMongoEntity {
     @BsonProperty("created_at")
     public Date createdAt;
 
+//    @BsonProperty("account_id")
+//    public ObjectId accountId;
     @BsonProperty("zip_codes_to_compare")
     public List<Integer> zipCodesToCompare;
 
@@ -36,11 +39,14 @@ public class ZipCodes extends PanacheMongoEntity {
         this.zipCodes = zipCodes;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
+//        this.accountId = accountId;
         this.zipCodesToCompare = zipCodesToCompare;
     }
 
     public ZipCodes() {
     }
+
+
 
     public String getName() {
         return name;
@@ -89,6 +95,14 @@ public class ZipCodes extends PanacheMongoEntity {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+//    public ObjectId getAccountId() {
+//        return accountId;
+//    }
+//
+//    public void setAccountId(ObjectId accountId) {
+//        this.accountId = accountId;
+//    }
 
     public List<Integer> getZipCodesToCompare() {
         return zipCodesToCompare;

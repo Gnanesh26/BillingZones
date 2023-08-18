@@ -6,9 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.bson.types.ObjectId;
 import org.mongo.Entity.Account;
-import org.mongo.Entity.BillingZone;
 import org.mongo.Entity.BillingZones;
-import org.mongo.Entity.ZipCodes;
 import org.mongo.Repository.AccountRepository;
 import org.mongo.Repository.BillingZonesRepository;
 
@@ -24,8 +22,6 @@ public class BillingZonesResource {
 
     @Inject
     AccountRepository accountRepository;
-
-
 
 
     @POST
@@ -83,15 +79,15 @@ public class BillingZonesResource {
                     .build();
         }
 
-        // Check if the name is already used for the same accountId
-        boolean nameExists = existingZones.stream()
-                .anyMatch(zone -> zone.getName().equals(newBillingZone.getName()));
-
-        if (nameExists) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Invalid!!! Name must be unique for the same Account ID.")
-                    .build();
-        }
+//        // Check if the name is already used for the same accountId
+//        boolean nameExists = existingZones.stream()
+//                .anyMatch(zone -> zone.getName().equals(newBillingZone.getName()));
+//
+//        if (nameExists) {
+//            return Response.status(Response.Status.BAD_REQUEST)
+//                    .entity("Invalid!!! Name must be unique for the same Account ID.")
+//                    .build();
+//        }
 
         newBillingZone.setUpdatedAt(new Date());
         newBillingZone.setCreatedAt(new Date());
@@ -101,16 +97,6 @@ public class BillingZonesResource {
 //
         return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
     }
-
-
-
-
-
-
-
-
-
-
 
 
     @DELETE
@@ -130,68 +116,12 @@ public class BillingZonesResource {
             return Response.status(Response.Status.OK)
                     .entity("Zone deleted successfully").
                     build();
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Invalid format for Zone ID.")
                     .build();
         }
     }
-
-
-
-
-
-
-    //    @POST
-//    public Response createZipCodes(ZipCodes zipCodes) {
-//        Set<Integer> zipCodesToCompare = new LinkedHashSet<>();
-//        Set<Integer> uniqueFirstThreeDigits = new LinkedHashSet<>();
-//
-//        for (String zipCode : zipCodes.getZipCodes()) {
-//            int firstThreeDigits = Integer.parseInt(zipCode.substring(0, 3)) * 100;
-//
-//            if (!uniqueFirstThreeDigits.add(firstThreeDigits)) {
-//                return Response.status(Response.Status.BAD_REQUEST)
-//                        .entity("Same zip-code !! Check again")
-//                        .build();
-//            }
-//            for (int j = 0; j <= 100; j++) {
-//                int arrayOfZipCodes = firstThreeDigits + j;
-//                zipCodesToCompare.add(arrayOfZipCodes);
-//            }
-//        }
-//        // Convert the set to a list for storage
-//        List<Integer> zipCodesList = new ArrayList<>(zipCodesToCompare);
-//
-//        ZipCodes codes = new ZipCodes(
-//                zipCodes.getName(),
-//                zipCodes.getZoneType(),
-//                zipCodes.getMinCharge(),
-//                zipCodes.getZipCodes(),
-//                new Date(),
-//                new Date(),
-//                zipCodesList);
-//
-//        codes.persist();
-//
-//        return Response.ok(codes).build();
-//    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
