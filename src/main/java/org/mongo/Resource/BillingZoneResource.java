@@ -115,7 +115,9 @@ public class BillingZoneResource {
             }
 
             billingZoneRepository.delete(zoneToDelete);
-            return Response.status(Response.Status.OK).entity("Zone deleted successfully").build();
+            return Response.status(Response.Status.OK)
+                    .entity("Zone deleted successfully").
+                    build();
         }
         catch (IllegalArgumentException ex) {
             return Response.status(Response.Status.BAD_REQUEST)
