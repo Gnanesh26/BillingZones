@@ -58,7 +58,7 @@ public class ZipCodesResource {
                 zipCodesToCompare.add(zipCodeValue);
             } else {
                 return Response.status(Response.Status.BAD_REQUEST)
-                        .entity("Invalid zip-code length: " + zipCode)
+                        .entity("Invalid zip-code length , Please check again and enter!")
                         .build();
             }
         }
