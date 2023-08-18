@@ -26,6 +26,8 @@ public class ZipCodesResource {
     public Response createZipCodes(ZipCodes zipCodes) {
         Set<Integer> zipCodesToCompare = new LinkedHashSet<>();
         Set<Integer> uniqueFirstThreeDigits = new LinkedHashSet<>();
+        Set<Integer> uniqueFiveDigits = new LinkedHashSet<>();
+
 
         for (String zipCode : zipCodes.getZipCodes()) {
             int zipCodeValue = Integer.parseInt(zipCode);
@@ -44,6 +46,12 @@ public class ZipCodesResource {
                     zipCodesToCompare.add(newZipCode);
                 }
             } else if (zipCode.length() == 5) {
+                if (!uniqueFiveDigits.add(zipCodeValue)) {
+                    return Response.status(Response.Status.BAD_REQUEST)
+                            .entity("Same zip-code !! Check again")
+                            .build();
+                }
+
                 zipCodesToCompare.add(zipCodeValue);
             }
         }
