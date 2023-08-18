@@ -4,9 +4,6 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.bson.types.ObjectId;
-import org.mongo.Entity.Account;
-import org.mongo.Entity.BillingZones;
 import org.mongo.Entity.ZipCodes;
 import org.mongo.Repository.AccountRepository;
 
@@ -28,16 +25,22 @@ public class ZipCodesResource {
         Set<Integer> uniqueFirstThreeDigits = new LinkedHashSet<>();
         Set<Integer> uniqueFiveDigits = new LinkedHashSet<>();
 
-
         for (String zipCode : zipCodes.getZipCodes()) {
-            int zipCodeValue = Integer.parseInt(zipCode);
+            int zipCodeValue;
+            try {
+                zipCodeValue = Integer.parseInt(zipCode);
+            } catch (NumberFormatException e) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Invalid zip-code format: " + zipCode)
+                        .build();
+            }
 
             if (zipCode.length() == 3) {
                 int firstThreeDigits = zipCodeValue * 100;
 
                 if (!uniqueFirstThreeDigits.add(firstThreeDigits)) {
                     return Response.status(Response.Status.BAD_REQUEST)
-                            .entity("Same zip-code !! Check again")
+                            .entity("Same first three digits zip-code !! Check again")
                             .build();
                 }
 
@@ -48,15 +51,18 @@ public class ZipCodesResource {
             } else if (zipCode.length() == 5) {
                 if (!uniqueFiveDigits.add(zipCodeValue)) {
                     return Response.status(Response.Status.BAD_REQUEST)
-                            .entity("Same zip-code !! Check again")
+                            .entity("Same five digits zip-code !! Check again")
                             .build();
                 }
 
                 zipCodesToCompare.add(zipCodeValue);
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Invalid zip-code length: " + zipCode)
+                        .build();
             }
         }
 
-        // Convert the set to a list for storage
         List<Integer> zipCodesList = new ArrayList<>(zipCodesToCompare);
 
         ZipCodes codes = new ZipCodes(
@@ -72,7 +78,6 @@ public class ZipCodesResource {
 
         return Response.ok(codes).build();
     }
-
 }
 
 
