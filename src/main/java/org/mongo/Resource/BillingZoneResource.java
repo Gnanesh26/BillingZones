@@ -34,7 +34,9 @@ public class BillingZoneResource {
                     .build();
         }
 
-        ObjectId accountId = null;
+//        ObjectId accountId = null;
+        ObjectId accountId;
+
         try {
             accountId = new ObjectId(String.valueOf(newBillingZone.getAccountId()));
         } catch (IllegalArgumentException ex) {
@@ -54,8 +56,8 @@ public class BillingZoneResource {
         double minDistanceDeferrable = 0.01;
 
         List<BillingZone> existingZones = BillingZone.list("accountId", accountId);
-
-        double previousMaxDistance = 0.0; // Initialize the previousMaxDistance
+//
+        double previousMaxDistance = 0.0;
         boolean isFirstEntry = true;
 
         if (!existingZones.isEmpty()) {
@@ -95,5 +97,30 @@ public class BillingZoneResource {
 
         billingZoneRepository.persist(newBillingZone);
         return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
+    }
+
+
+
+    @DELETE
+    @Path("/{zoneId}")
+    public Response deleteBillingZone(@PathParam("zoneId") String zoneIdStr) {
+        try {
+            ObjectId zoneId = new ObjectId(zoneIdStr);
+
+            BillingZone zoneToDelete = billingZoneRepository.findById(zoneId);
+            if (zoneToDelete == null) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Zone configuration not found.")
+                        .build();
+            }
+
+            billingZoneRepository.delete(zoneToDelete);
+            return Response.status(Response.Status.OK).entity("Zone deleted successfully").build();
+        }
+        catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Invalid format for Zone ID.")
+                    .build();
+        }
     }
 }
