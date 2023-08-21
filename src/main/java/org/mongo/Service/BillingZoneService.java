@@ -89,5 +89,27 @@ public class BillingZoneService {
 
         return Response.status(Response.Status.CREATED).entity(newBillingZone).build();
     }
+
+
+
+
+
+
+
+
+    public Response deleteBillingZone(ObjectId zoneId) {
+        BillingZones zoneToDelete = billingZonesRepository.findById(zoneId);
+        if (zoneToDelete == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Zone configuration not found.")
+                    .build();
+        }
+
+        billingZonesRepository.delete(zoneToDelete);
+        return Response.status(Response.Status.OK)
+                .entity("Zone deleted successfully")
+                .build();
+    }
 }
+
 

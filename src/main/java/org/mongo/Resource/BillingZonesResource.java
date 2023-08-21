@@ -34,26 +34,12 @@ public class BillingZonesResource {
     }
 
 
-
-
-
     @DELETE
     @Path("/{zoneId}")
     public Response deleteBillingZone(@PathParam("zoneId") String zoneIdStr) {
         try {
             ObjectId zoneId = new ObjectId(zoneIdStr);
-
-            BillingZones zoneToDelete = billingZonesRepository.findById(zoneId);
-            if (zoneToDelete == null) {
-                return Response.status(Response.Status.NOT_FOUND)
-                        .entity("Zone configuration not found.")
-                        .build();
-            }
-
-            billingZonesRepository.delete(zoneToDelete);
-            return Response.status(Response.Status.OK)
-                    .entity("Zone deleted successfully").
-                    build();
+            return billingZoneService.deleteBillingZone(zoneId);
         } catch (IllegalArgumentException ex) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Invalid format for Zone ID.")
@@ -61,18 +47,3 @@ public class BillingZonesResource {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
