@@ -23,8 +23,6 @@ public class BillingZonesResource {
         return billingZoneService.createBillingZone(newBillingZone);
     }
 
-
-
     @DELETE
     @Path("/{zoneId}")
     public Response deleteBillingZone(@PathParam("zoneId") String zoneIdStr) {
@@ -37,4 +35,10 @@ public class BillingZonesResource {
                     .build();
         }
     }
+
+
+//    @PUT
+//    public Response updateBillingZone(BillingZones updatedBillingZone) {
+//      return billingZoneService.updateBillingZone(updatedBillingZone);
+//    }
 }

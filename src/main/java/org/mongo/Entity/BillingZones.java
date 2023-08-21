@@ -132,4 +132,7 @@ public class BillingZones extends PanacheMongoEntity {
     public void setZipCodesToCompare(List<Integer> zipCodesToCompare) {
         this.zipCodesToCompare = zipCodesToCompare;
     }
+
+
+
 }
