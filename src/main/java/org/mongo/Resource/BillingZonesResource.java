@@ -5,24 +5,14 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.bson.types.ObjectId;
-import org.mongo.Entity.Account;
 import org.mongo.Entity.BillingZones;
-import org.mongo.Repository.AccountRepository;
-import org.mongo.Repository.BillingZonesRepository;
 import org.mongo.Service.BillingZoneService;
 
-import java.util.*;
 
 @Path("/billingZones")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class BillingZonesResource {
-
-    @Inject
-    BillingZonesRepository billingZonesRepository;
-
-    @Inject
-    AccountRepository accountRepository;
 
 
     @Inject
