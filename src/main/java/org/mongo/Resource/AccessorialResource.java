@@ -69,6 +69,8 @@ public class AccessorialResource {
 
         if (resultMessage.equals("Accessorials updated successfully.")) {
             return Response.status(Response.Status.OK).entity(resultMessage).build();
+        } else if (resultMessage.contains("already exists")) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(resultMessage).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity(resultMessage).build();
         }

@@ -72,11 +72,6 @@ public class AccessorialService {
     }
 
 
-
-
-
-
-
     public String updateAccessorial(ObjectId accessorialsId, AccessorialsRequest accessorialsRequest) {
         Accessorial existingAccessorial = Accessorial.findById(accessorialsId);
 
@@ -84,15 +79,32 @@ public class AccessorialService {
             return "Accessorials not found.";
         }
 
-        existingAccessorial.setName(accessorialsRequest.getName());
-        existingAccessorial.setCode(accessorialsRequest.getCode());
-        existingAccessorial.setVisibleto(accessorialsRequest.getVisibleTo());
-        existingAccessorial.setRateSource(accessorialsRequest.getRateSource());
-        existingAccessorial.setResources(accessorialsRequest.getResources());
-        existingAccessorial.setHybridSource(accessorialsRequest.getHybridSource());
-        existingAccessorial.update();
-        return "Accessorials updated successfully.";
-    }
+        if (!existingAccessorial.getName().equals(accessorialsRequest.getName()) &&
+                accessorialRepository.existsByName(accessorialsRequest.getName())) {
+            return "An Accessorial with the same name already exists.";
+        }
+
+        if (!existingAccessorial.getCode().equals(accessorialsRequest.getCode()) &&
+                accessorialRepository.existsByCode(accessorialsRequest.getCode())) {
+            return "An Accessorial with the same code already exists.";
+        }
+
+//    public String updateAccessorial(ObjectId accessorialsId, AccessorialsRequest accessorialsRequest) {
+//        Accessorial existingAccessorial = Accessorial.findById(accessorialsId);
+//
+//        if (existingAccessorial == null) {
+//            return "Accessorials not found.";
+//        }
+
+            existingAccessorial.setName(accessorialsRequest.getName());
+            existingAccessorial.setCode(accessorialsRequest.getCode());
+            existingAccessorial.setVisibleto(accessorialsRequest.getVisibleTo());
+            existingAccessorial.setRateSource(accessorialsRequest.getRateSource());
+            existingAccessorial.setResources(accessorialsRequest.getResources());
+            existingAccessorial.setHybridSource(accessorialsRequest.getHybridSource());
+            existingAccessorial.update();
+            return "Accessorials updated successfully.";}
+        }
 
 
 
@@ -105,7 +117,8 @@ public class AccessorialService {
 
 
 
-}
+
+
 
 
 
