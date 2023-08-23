@@ -10,6 +10,7 @@ import org.mongo.common.Enums;
 import java.util.List;
 
 
+
 @ApplicationScoped
 public class AccessorialService {
     @Inject
@@ -47,9 +48,5 @@ public class AccessorialService {
     public List<Accessorials> getAccessorialByAccountId(ObjectId accountId) {
         return accessorialRepository.findByAccountId(accountId);
     }
-
-
-
-
 
 }

@@ -4,8 +4,10 @@ import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
 import org.mongo.Entity.Accessorials;
+import org.mongo.common.Enums;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class AccessorialRepository implements PanacheMongoRepository<Accessorials> {
@@ -31,28 +33,5 @@ public class AccessorialRepository implements PanacheMongoRepository<Accessorial
     public boolean existsByAccountId(ObjectId accountId) {
         return count("accountId", accountId) > 0;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 

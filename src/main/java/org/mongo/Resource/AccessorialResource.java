@@ -5,6 +5,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.bson.types.ObjectId;
 import org.mongo.Entity.Accessorials;
+import org.mongo.Repository.AccessorialRepository;
 import org.mongo.Request.AccessorialsRequest;
 import org.mongo.Service.AccessorialService;
 import org.mongo.common.Enums;
@@ -18,6 +19,9 @@ public class AccessorialResource {
 
     @Inject
     AccessorialService accessorialService;
+
+    @Inject
+    AccessorialRepository accessorialRepository;
 
 
     @POST
@@ -55,12 +59,5 @@ public class AccessorialResource {
 
 
 
+    }
 
-
-
-
-
-
-
-
-}
