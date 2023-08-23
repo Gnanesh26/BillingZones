@@ -59,6 +59,22 @@ public class AccessorialResource {
     }
 
 
+//    @PUT
+//    @Path("/{id}")
+//    public Response updateAccessorial(
+//            @PathParam("id") ObjectId accessorialsId,
+//            AccessorialsRequest accessorialsRequest) {
+//
+//        String resultMessage = accessorialService.updateAccessorial(accessorialsId, accessorialsRequest);
+//
+//        if (resultMessage.equals("Accessorials updated successfully.")) {
+//            return Response.status(Response.Status.OK).entity(resultMessage).build();
+//        } else {
+//            return Response.status(Response.Status.NOT_FOUND).entity(resultMessage).build();
+//        }
+//    }
+
+
     @PUT
     @Path("/{id}")
     public Response updateAccessorial(
@@ -74,6 +90,14 @@ public class AccessorialResource {
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity(resultMessage).build();
         }
+
     }
 }
+
+
+
+
+
+
+
 

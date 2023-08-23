@@ -51,14 +51,27 @@ public class AccessorialService {
         return "Accessorials entry created successfully.";
     }
 
+
+
+
+
+
     public List<Accessorial> getAccessorialsByNameOrCodeAndAccountId(String searchValue, ObjectId accountId) {
         return accessorialRepository.findByCodeOrNameAndAccountId(searchValue, accountId);
     }
 
 
+
+
+
+
     public List<Accessorial> getAccessorialByAccountId(ObjectId accountId) {
         return accessorialRepository.findByAccountId(accountId);
     }
+
+
+
+
 
 
     public String deleteAccessorials(ObjectId accessorialsId) {
@@ -79,15 +92,18 @@ public class AccessorialService {
             return "Accessorials not found.";
         }
 
+        // Check for unique name and code within the same account
         if (!existingAccessorial.getName().equals(accessorialsRequest.getName()) &&
-                accessorialRepository.existsByName(accessorialsRequest.getName())) {
-            return "An Accessorial with the same name already exists.";
+                accessorialRepository.existsByNameAndAccount(accessorialsRequest.getName(), existingAccessorial.getAccountId())) {
+            return "An Accessorial with the same name already exists for this account.";
         }
 
         if (!existingAccessorial.getCode().equals(accessorialsRequest.getCode()) &&
-                accessorialRepository.existsByCode(accessorialsRequest.getCode())) {
-            return "An Accessorial with the same code already exists.";
+                accessorialRepository.existsByCodeAndAccount(accessorialsRequest.getCode(), existingAccessorial.getAccountId())) {
+            return "An Accessorial with the same code already exists for this account.";
         }
+
+
 
 //    public String updateAccessorial(ObjectId accessorialsId, AccessorialsRequest accessorialsRequest) {
 //        Accessorial existingAccessorial = Accessorial.findById(accessorialsId);
@@ -96,15 +112,16 @@ public class AccessorialService {
 //            return "Accessorials not found.";
 //        }
 
-            existingAccessorial.setName(accessorialsRequest.getName());
-            existingAccessorial.setCode(accessorialsRequest.getCode());
-            existingAccessorial.setVisibleto(accessorialsRequest.getVisibleTo());
-            existingAccessorial.setRateSource(accessorialsRequest.getRateSource());
-            existingAccessorial.setResources(accessorialsRequest.getResources());
-            existingAccessorial.setHybridSource(accessorialsRequest.getHybridSource());
-            existingAccessorial.update();
-            return "Accessorials updated successfully.";}
-        }
+        existingAccessorial.setName(accessorialsRequest.getName());
+        existingAccessorial.setCode(accessorialsRequest.getCode());
+        existingAccessorial.setVisibleto(accessorialsRequest.getVisibleTo());
+        existingAccessorial.setRateSource(accessorialsRequest.getRateSource());
+        existingAccessorial.setResources(accessorialsRequest.getResources());
+        existingAccessorial.setHybridSource(accessorialsRequest.getHybridSource());
+        existingAccessorial.update();
+        return "Accessorials updated successfully.";
+    }
+}
 
 
 
