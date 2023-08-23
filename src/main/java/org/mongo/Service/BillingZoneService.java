@@ -12,6 +12,7 @@ import org.mongo.Repository.BillingZonesRepository;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
 @ApplicationScoped
 public class BillingZoneService {
     @Inject
@@ -90,6 +91,9 @@ public class BillingZoneService {
     }
 
 
+
+
+
     public Response deleteBillingZone(ObjectId zoneId) {
         BillingZones zoneToDelete = billingZonesRepository.findById(zoneId);
         if (zoneToDelete == null) {
@@ -103,13 +107,5 @@ public class BillingZoneService {
                 .entity("Zone deleted successfully")
                 .build();
     }
+       }
 
-
-
-    }
-//
-//
-//
-//
-//
-//

@@ -6,7 +6,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.bson.types.ObjectId;
 import org.mongo.Entity.BillingZones;
+import org.mongo.Repository.BillingZonesRepository;
 import org.mongo.Service.BillingZoneService;
+
+import java.util.Date;
 
 
 @Path("/billingZones")
@@ -17,6 +20,8 @@ public class BillingZonesResource {
 
     @Inject
     BillingZoneService billingZoneService;
+    @Inject
+    BillingZonesRepository billingZonesRepository;
 
     @POST
     public Response createBillingZone(BillingZones newBillingZone) {
@@ -35,10 +40,5 @@ public class BillingZonesResource {
                     .build();
         }
     }
-
-
-//    @PUT
-//    public Response updateBillingZone(BillingZones updatedBillingZone) {
-//      return billingZoneService.updateBillingZone(updatedBillingZone);
-//    }
 }
+
