@@ -4,11 +4,10 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.bson.types.ObjectId;
-import org.mongo.Entity.Accessorials;
+import org.mongo.Entity.Accessorial;
 import org.mongo.Repository.AccessorialRepository;
 import org.mongo.Request.AccessorialsRequest;
 import org.mongo.Service.AccessorialService;
-import org.mongo.common.Enums;
 
 import java.util.List;
 
@@ -32,15 +31,14 @@ public class AccessorialResource {
                 accessorialsRequest.getRateSource(),
                 accessorialsRequest.getResources(),
                 accessorialsRequest.getHybridSource(),
-                accessorialsRequest.getAccountId()
-        );
+                accessorialsRequest.getAccountId());
 
         return resultMessage;
     }
 
     @GET
     @Path("/search")
-    public List<Accessorials> searchAccessorialsByNameOrCodeAndAccountId(
+    public List<Accessorial> searchAccessorialsByNameOrCodeAndAccountId(
             @QueryParam("searchValue") String searchValue,
             @QueryParam("accountId") ObjectId accountId) {
         return accessorialService.getAccessorialsByNameOrCodeAndAccountId(searchValue, accountId);
@@ -48,16 +46,32 @@ public class AccessorialResource {
 
     @GET
     @Path("/{accountId}")
-    public List<Accessorials> getAccessorialsByAccountId(@PathParam("accountId") ObjectId accountId) {
+    public List<Accessorial> getAccessorialsByAccountId(@PathParam("accountId") ObjectId accountId) {
         return accessorialService.getAccessorialByAccountId(accountId);
     }
 
 
 
+//    @PUT
+//    @Path("/{id}")
+//    public String updateAccessorials(
+//            @PathParam("id") ObjectId accessorialsId,
+//            AccessorialsRequest updateRequest) {
+//
+//        return accessorialService.updateAccessorials(
+//                accessorialsId,
+//                updateRequest.getName(),
+//                updateRequest.getCode(),
+//                updateRequest.getVisibleTo(),
+//                updateRequest.getRateSource(),
+//                updateRequest.getResources(),
+//                updateRequest.getHybridSource());
+//    }
 
-
-
-
-
+    @DELETE
+    @Path("/{id}")
+    public String deleteAccessorials(@PathParam("id") ObjectId accessorialsId) {
+        return accessorialService.deleteAccessorials(accessorialsId);
+    }
     }
 

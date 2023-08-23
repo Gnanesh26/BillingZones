@@ -8,7 +8,7 @@ import org.mongo.common.Enums;
 
 @MongoEntity(collection = "accessorial")
 
-public class Accessorials extends PanacheMongoEntity {
+public class Accessorial extends PanacheMongoEntity {
     @BsonProperty("name")
     private String name;
 
@@ -31,7 +31,7 @@ public class Accessorials extends PanacheMongoEntity {
     private ObjectId accountId;
 
 
-    public Accessorials(String name, String code, Enums.VisisbleTo visibleto, Enums.RateSourceType rateSource, Enums.ResourcesType resources, Enums.HybridSource hybridSource, ObjectId accountId) {
+    public Accessorial(String name, String code, Enums.VisisbleTo visibleto, Enums.RateSourceType rateSource, Enums.ResourcesType resources, Enums.HybridSource hybridSource, ObjectId accountId) {
         this.name = name;
         this.code = code;
         this.visibleto = visibleto;
@@ -41,7 +41,7 @@ public class Accessorials extends PanacheMongoEntity {
         this.accountId = accountId;
     }
 
-    public Accessorials() {
+    public Accessorial() {
     }
 
     public String getName() {
@@ -99,4 +99,6 @@ public class Accessorials extends PanacheMongoEntity {
     public void setAccountId(ObjectId accountId) {
         this.accountId = accountId;
     }
+
+
 }
