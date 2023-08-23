@@ -3,6 +3,7 @@ package org.mongo.Resource;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.bson.types.ObjectId;
 import org.mongo.Entity.Accessorial;
 import org.mongo.Repository.AccessorialRepository;
@@ -51,29 +52,26 @@ public class AccessorialResource {
     }
 
 
-//    @PUT
-//    @Path("/{id}")
-//    public String updateAccessorials(
-//            @PathParam("id") ObjectId accessorialsId,
-//            AccessorialsRequest updateRequest) {
-//
-//        return accessorialService.updateAccessorials(
-//                accessorialsId,
-//                updateRequest.getName(),
-//                updateRequest.getCode(),
-//                updateRequest.getVisibleTo(),
-//                updateRequest.getRateSource(),
-//                updateRequest.getResources(),
-//                updateRequest.getHybridSource());
-//    }
-
     @DELETE
     @Path("/{id}")
     public String deleteAccessorials(@PathParam("id") ObjectId accessorialsId) {
         return accessorialService.deleteAccessorials(accessorialsId);
     }
+
+
+    @PUT
+    @Path("/{id}")
+    public Response updateAccessorial(
+            @PathParam("id") ObjectId accessorialsId,
+            AccessorialsRequest accessorialsRequest) {
+
+        String resultMessage = accessorialService.updateAccessorial(accessorialsId, accessorialsRequest);
+
+        if (resultMessage.equals("Accessorials updated successfully.")) {
+            return Response.status(Response.Status.OK).entity(resultMessage).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).entity(resultMessage).build();
+        }
     }
-
-
-//}
+}
 

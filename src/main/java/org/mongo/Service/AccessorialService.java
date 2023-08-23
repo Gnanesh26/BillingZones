@@ -5,9 +5,11 @@ import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.mongo.Entity.Accessorial;
 import org.mongo.Repository.AccessorialRepository;
+import org.mongo.Request.AccessorialsRequest;
 import org.mongo.common.Enums;
 
 import java.util.List;
+
 
 
 @ApplicationScoped
@@ -58,31 +60,6 @@ public class AccessorialService {
         return accessorialRepository.findByAccountId(accountId);
     }
 
-//
-//    public String updateAccessorials(ObjectId accessorialsId, String newName, String newCode,
-//                                     Enums.VisisbleTo newVisibleTo, Enums.RateSourceType newRateSource,
-//                                     Enums.ResourcesType newResources, Enums.HybridSource newHybridSource) {
-//        Optional<Accessorials> accessorialsOptional = Optional.ofNullable(accessorialRepository.findById(accessorialsId));
-//
-//        if (!accessorialsOptional.isPresent()) {
-//            return "Accessorials entry not found.";
-//        }
-//
-//        Accessorials existingAccessorials = accessorialsOptional.get();
-//
-//
-//        existingAccessorials.setName(newName);
-//        existingAccessorials.setCode(newCode);
-//        existingAccessorials.setVisibleto(newVisibleTo);
-//        existingAccessorials.setRateSource(newRateSource);
-//        existingAccessorials.setResources(newResources);
-//        existingAccessorials.setHybridSource(newHybridSource);
-//
-//        accessorialRepository.persist(existingAccessorials);
-//
-//        return "Accessorials entry updated successfully.";
-//    }
-
 
     public String deleteAccessorials(ObjectId accessorialsId) {
         Accessorial accessorial = Accessorial.findById(accessorialsId);
@@ -93,6 +70,30 @@ public class AccessorialService {
         Accessorial.deleteById(accessorialsId);
         return "Accessorials deleted successfully.";
     }
+
+
+
+
+
+
+
+    public String updateAccessorial(ObjectId accessorialsId, AccessorialsRequest accessorialsRequest) {
+        Accessorial existingAccessorial = Accessorial.findById(accessorialsId);
+
+        if (existingAccessorial == null) {
+            return "Accessorials not found.";
+        }
+
+        existingAccessorial.setName(accessorialsRequest.getName());
+        existingAccessorial.setCode(accessorialsRequest.getCode());
+        existingAccessorial.setVisibleto(accessorialsRequest.getVisibleTo());
+        existingAccessorial.setRateSource(accessorialsRequest.getRateSource());
+        existingAccessorial.setResources(accessorialsRequest.getResources());
+        existingAccessorial.setHybridSource(accessorialsRequest.getHybridSource());
+        existingAccessorial.update();
+        return "Accessorials updated successfully.";
+    }
+
 
 
 

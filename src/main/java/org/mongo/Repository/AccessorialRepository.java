@@ -21,6 +21,9 @@ public class AccessorialRepository implements PanacheMongoRepository<Accessorial
     }
 
 
+    public Accessorial findByCode(String code) {
+        return find("code", code).firstResult();
+    }
 
 
 //
