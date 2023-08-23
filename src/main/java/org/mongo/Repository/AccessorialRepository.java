@@ -39,9 +39,9 @@ public class AccessorialRepository implements PanacheMongoRepository<Accessorial
 
 
 
-    public Accessorial findByCode(String code) {
-        return find("code", code).firstResult();
-    }
+//    public Accessorial findByCode(String code) {
+//        return find("code", code).firstResult();
+//    }
 
 
 
@@ -55,9 +55,9 @@ public class AccessorialRepository implements PanacheMongoRepository<Accessorial
     }
 
 
-    public boolean existsByAccountId(ObjectId accountId) {
-        return count("accountId", accountId) > 0;
-    }
+//    public boolean existsByAccountId(ObjectId accountId) {
+//        return count("accountId", accountId) > 0;
+//    }
 
 }
 
