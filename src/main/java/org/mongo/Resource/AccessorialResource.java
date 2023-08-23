@@ -18,8 +18,7 @@ public class AccessorialResource {
 
     @Inject
     AccessorialService accessorialService;
-    private String name;
-    private String code;
+
 
     @POST
     public String createAccessorials(AccessorialsRequest accessorialsRequest) {
