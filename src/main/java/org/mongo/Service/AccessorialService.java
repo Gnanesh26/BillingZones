@@ -34,15 +34,15 @@ public class AccessorialService {
 //            return "An accessorials entry with the same code already exists for this account.";
 //        }
 
-        Accessorial accessorialByName=Accessorial.find("name",name).firstResult();
-        Accessorial accessorialByCode=Accessorial.find("code",code).firstResult();
+        Accessorial accessorialByName = Accessorial.find("name", name).firstResult();
+        Accessorial accessorialByCode = Accessorial.find("code", code).firstResult();
 
-        if (accessorialByName!=null){
-            return "Invalid!! Name must be unique.";
+        if (accessorialByName != null || accessorialByCode != null) {
+            return "Invalid!! NAME and CODE must be unique! Please check and enter Again.";
         }
-        if (accessorialByCode!=null){
-            return "Invalid!! Code must be unique.";
-        }
+//        if (accessorialByCode!=null){
+//            return "Invalid!! Code must be unique.";
+//        }
 
         Accessorial newAccessorial = new Accessorial(name, code, visibleTo, rateSource, resources, hybridSource, accountId);
         accessorialRepository.persist(newAccessorial);
@@ -88,10 +88,10 @@ public class AccessorialService {
         Accessorial accessorial = Accessorial.findById(accessorialsId);
 
         if (accessorial == null) {
-            return "Accessorials entry not found.";
+            return "Accessorials not found .";
         }
         Accessorial.deleteById(accessorialsId);
-        return "Accessorials entry deleted successfully.";
+        return "Accessorials deleted successfully.";
     }
 }
 
