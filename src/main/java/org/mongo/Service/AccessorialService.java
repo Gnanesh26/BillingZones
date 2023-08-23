@@ -93,6 +93,17 @@ public class AccessorialService {
         Accessorial.deleteById(accessorialsId);
         return "Accessorials deleted successfully.";
     }
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

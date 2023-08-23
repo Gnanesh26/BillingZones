@@ -51,7 +51,6 @@ public class AccessorialResource {
     }
 
 
-
 //    @PUT
 //    @Path("/{id}")
 //    public String updateAccessorials(
@@ -74,4 +73,7 @@ public class AccessorialResource {
         return accessorialService.deleteAccessorials(accessorialsId);
     }
     }
+
+
+//}
 

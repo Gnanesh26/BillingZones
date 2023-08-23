@@ -15,9 +15,14 @@ public class AccessorialRepository implements PanacheMongoRepository<Accessorial
                 .list();
     }
 
+
     public List<Accessorial> findByAccountId(ObjectId accountId) {
         return list("accountId", accountId);
     }
+
+
+
+
 //
 //    public boolean existsByNameAndCodeForAccount(String name, String code, ObjectId accountId) {
 //        return count("name = ?1 and accountId = ?2", name, accountId) > 0;
