@@ -4,7 +4,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.mongo.Entity.Accessorial;
-import org.mongo.Entity.Account;
 import org.mongo.Repository.AccessorialRepository;
 import org.mongo.Repository.AccountRepository;
 import org.mongo.Request.AccessorialsRequest;
@@ -25,10 +24,13 @@ public class AccessorialService {
                                      Enums.RateSourceType rateSource, Enums.ResourcesType resources, Enums.HybridSource hybridSource,
                                      ObjectId accountId) {
 //        Account accountExists = accountRepository.findById(accountId);
-                boolean accountExists = accessorialRepository.existsByAccountId(accountId);
-        if (!accountExists) {
-            return "Account ID not found.";
-        }
+//                boolean accountExists = accessorialRepository.existsByAccountId(accountId);
+//        if (!accountExists) {
+//            return "Account ID not found.";
+//        }
+
+
+
 
         boolean nameExists = accessorialRepository.existsByNameAndCodeForAccount(name, code, accountId);
         boolean codeExists = accessorialRepository.existsByCodeAndNameForAccount(code, name, accountId);
@@ -90,6 +92,12 @@ public class AccessorialService {
     }
 
 
+
+
+
+
+
+
     public String updateAccessorial(ObjectId accessorialsId, AccessorialsRequest accessorialsRequest) {
         Accessorial existingAccessorial = Accessorial.findById(accessorialsId);
 
@@ -107,8 +115,6 @@ public class AccessorialService {
                 accessorialRepository.existsByCodeAndAccount(accessorialsRequest.getCode(), existingAccessorial.getAccountId())) {
             return "An Accessorial with the same code already exists for this account.";
         }
-
-
 
 //    public String updateAccessorial(ObjectId accessorialsId, AccessorialsRequest accessorialsRequest) {
 //        Accessorial existingAccessorial = Accessorial.findById(accessorialsId);
