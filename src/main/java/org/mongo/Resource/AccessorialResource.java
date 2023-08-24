@@ -78,8 +78,7 @@ public class AccessorialResource {
     @PUT
     @Path("/{id}")
     public Response updateAccessorial(
-            @PathParam("id") ObjectId accessorialsId,
-            AccessorialsRequest accessorialsRequest) {
+            @PathParam("id") ObjectId accessorialsId, AccessorialsRequest accessorialsRequest) {
 
         String resultMessage = accessorialService.updateAccessorial(accessorialsId, accessorialsRequest);
 

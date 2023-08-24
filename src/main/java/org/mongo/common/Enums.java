@@ -57,4 +57,92 @@ public class Enums {
     }
 
 
+    public enum ChargeItemType {
+        ORDER_OR_SHIPMENT(0), PALLET(1), ITEM_OR_MACHINE(2);
+
+        private int value;
+
+        ChargeItemType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+
+    public enum ChargableType {
+
+        CALENDER_DAYS(0), BUSINESS_DAYS(1), HOURS(2);
+        private int value;
+
+        ChargableType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+
+    public enum RoundOffDays {
+        WEEKLY(0), BY_MONTH(1), MONTHLY(2), NONE(3);
+
+
+        private int value;
+
+        RoundOffDays(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    public enum TripType {
+        SINGLE_WAY(0), ROUND_TRIP(1);
+        private int value;
+
+        TripType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+
+    }
+
+    public enum ChargeType {
+        PERCENTAGE(0), FLAT(1);
+
+
+        private int value;
+
+        ChargeType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+
+    public enum CommonResource {
+        FLIGHTS(0), STAIRS(1), PEOPLE(2), ITEMS(3), ATTEMPTS(4), PALLETS(5), ORDER_ITEMS(6);
+        private int value;
+
+        CommonResource(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
 }

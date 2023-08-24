@@ -12,7 +12,6 @@ import org.mongo.common.Enums;
 import java.util.List;
 
 
-
 @ApplicationScoped
 public class AccessorialService {
     @Inject
@@ -28,8 +27,6 @@ public class AccessorialService {
 //        if (!accountExists) {
 //            return "Account ID not found.";
 //        }
-
-
 
 
         boolean nameExists = accessorialRepository.existsByNameAndCodeForAccount(name, code, accountId);
@@ -59,26 +56,14 @@ public class AccessorialService {
     }
 
 
-
-
-
-
     public List<Accessorial> getAccessorialsByNameOrCodeAndAccountId(String searchValue, ObjectId accountId) {
         return accessorialRepository.findByCodeOrNameAndAccountId(searchValue, accountId);
     }
 
 
-
-
-
-
     public List<Accessorial> getAccessorialByAccountId(ObjectId accountId) {
         return accessorialRepository.findByAccountId(accountId);
     }
-
-
-
-
 
 
     public String deleteAccessorials(ObjectId accessorialsId) {
@@ -90,12 +75,6 @@ public class AccessorialService {
         Accessorial.deleteById(accessorialsId);
         return "Accessorials deleted successfully.";
     }
-
-
-
-
-
-
 
 
     public String updateAccessorial(ObjectId accessorialsId, AccessorialsRequest accessorialsRequest) {

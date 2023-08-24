@@ -21,10 +21,6 @@ public class AccessorialRepository implements PanacheMongoRepository<Accessorial
     }
 
 
-
-
-
-
     public boolean existsByNameAndAccount(String name, ObjectId accountId) {
         return find("name = ?1 and accountId = ?2", name, accountId).count() > 0;
     }
@@ -34,16 +30,9 @@ public class AccessorialRepository implements PanacheMongoRepository<Accessorial
     }
 
 
-
-
-
-
-
 //    public Accessorial findByCode(String code) {
 //        return find("code", code).firstResult();
 //    }
-
-
 
 
     public boolean existsByNameAndCodeForAccount(String name, String code, ObjectId accountId) {

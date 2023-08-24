@@ -7,33 +7,34 @@ import org.bson.types.ObjectId;
 
 import java.util.Date;
 import java.util.List;
+
 @MongoEntity(collection = "billing_zones")
 public class BillingZones extends PanacheMongoEntity {
 
-        @BsonProperty("name")
-        private String name;
-        @BsonProperty("zone_type")
-        private String zoneType;
-        @BsonProperty("updated_at")
-        private Date updatedAt;
-        @BsonProperty("created_at")
-        private Date createdAt;
+    @BsonProperty("name")
+    private String name;
+    @BsonProperty("zone_type")
+    private String zoneType;
+    @BsonProperty("updated_at")
+    private Date updatedAt;
+    @BsonProperty("created_at")
+    private Date createdAt;
 
-        // for distance
-        @BsonProperty("min_distance")
-        private double minDistance;
-        @BsonProperty("max_distance")
-        private double maxDistance;
-        @BsonProperty("account_id")
-        private ObjectId accountId;
+    // for distance
+    @BsonProperty("min_distance")
+    private double minDistance;
+    @BsonProperty("max_distance")
+    private double maxDistance;
+    @BsonProperty("account_id")
+    private ObjectId accountId;
 
-        // for zipCodes
-        @BsonProperty("min_charge")
-        private String minCharge;
-        @BsonProperty("zip_codes")
-        private List<String> zipCodes;
-        @BsonProperty("zip_codes_to_compare")
-        private List<Integer> zipCodesToCompare;
+    // for zipCodes
+    @BsonProperty("min_charge")
+    private String minCharge;
+    @BsonProperty("zip_codes")
+    private List<String> zipCodes;
+    @BsonProperty("zip_codes_to_compare")
+    private List<Integer> zipCodesToCompare;
 
     public BillingZones(String name, String zoneType, Date updatedAt, Date createdAt, double minDistance, double maxDistance, ObjectId accountId, String minCharge, List<String> zipCodes, List<Integer> zipCodesToCompare) {
         this.name = name;
@@ -50,7 +51,6 @@ public class BillingZones extends PanacheMongoEntity {
 
     public BillingZones() {
     }
-
 
 
     public String getName() {
@@ -132,7 +132,6 @@ public class BillingZones extends PanacheMongoEntity {
     public void setZipCodesToCompare(List<Integer> zipCodesToCompare) {
         this.zipCodesToCompare = zipCodesToCompare;
     }
-
 
 
 }
