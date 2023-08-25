@@ -1,15 +1,12 @@
 package org.mongo.Service;
 
-
 import com.mongodb.client.MongoClient;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.mongo.Entity.Task;
 import org.mongo.Entity.TaskAudit;
-
 import java.time.LocalDateTime;
-
 
 @ApplicationScoped
 public class AuditService {
@@ -25,10 +22,6 @@ public class AuditService {
         audit.username = username;
         mongoClient.getDatabase("audit_log").getCollection("task_audit", TaskAudit.class).insertOne(audit);
     }
-
-
-
-
 
     public Task updateTask(String id, Task updatedTask) {
         Task existingTask = Task.findById(new ObjectId(id));
@@ -61,7 +54,6 @@ public class AuditService {
             return false;
         }
     }
-
 }
 
 

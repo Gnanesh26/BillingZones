@@ -3,12 +3,11 @@ package org.mongo.Resource;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.SecurityContext;
 import org.mongo.Entity.Task;
 import org.mongo.Service.AuditService;
+
 
 @Path("/tasks")
 @Produces(MediaType.APPLICATION_JSON)
@@ -58,7 +57,6 @@ public class TaskResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-
 }
 
 
