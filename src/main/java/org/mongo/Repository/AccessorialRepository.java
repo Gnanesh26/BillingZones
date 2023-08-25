@@ -10,8 +10,7 @@ import java.util.List;
 @ApplicationScoped
 public class AccessorialRepository implements PanacheMongoRepository<Accessorial> {
     public List<Accessorial> findByCodeOrNameAndAccountId(String searchValue, ObjectId accountId) {
-        return find("accountId = ?1 and code = ?2 or name = ?3)",
-                accountId, searchValue, searchValue)
+        return find("accountId = ?1 and code = ?2 or name = ?3", accountId, searchValue, searchValue)
                 .list();
     }
 

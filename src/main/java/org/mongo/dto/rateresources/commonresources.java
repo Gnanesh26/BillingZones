@@ -6,7 +6,7 @@ public class commonresources {
 
 
     private Enums.CommonResource commonResource;
-    private  int value;
+    private int value;
 
     public commonresources() {
     }
