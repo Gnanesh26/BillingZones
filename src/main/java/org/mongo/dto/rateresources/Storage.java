@@ -1,15 +1,16 @@
 package org.mongo.dto.rateresources;
 
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.mongo.common.Enums;
 
 public class Storage {
-private Enums.ChargeItemType chargeItemType;
-private Enums.ChargableType chargableType;
-private Enums.RoundOffDays roundOffDays;
-
-private int noOfFreeBusinessDays;
-
-private int chargePerBusinessDays;
+    private Enums.ChargeItemType chargeItemType;
+    private Enums.ChargableType chargableType;
+    private Enums.RoundOffDays roundOffDays;
+    @BsonProperty("no_of_business_days")
+    private int noOfFreeBusinessDays;
+    @BsonProperty("charge_per_business_days")
+    private int chargePerBusinessDays;
 
     public Storage() {
     }

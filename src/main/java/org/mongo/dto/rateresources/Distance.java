@@ -1,10 +1,12 @@
 package org.mongo.dto.rateresources;
 
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.mongo.common.Enums;
 
 public class Distance {
-
+    @BsonProperty("free_miles")
     private int freeMiles;
+    @BsonProperty("duration_miles")
     private int durationMiles;
     private Enums.TripType tripType;
 
